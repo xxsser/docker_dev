@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng12-dev \
+        libgmp-dev \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include \
+    && docker-php-ext-configure gmp \
+    && docker-php-ext-install gmp \
+    && echo extension=gmp.so > /usr/local/etc/php/conf.d/gmp.ini
     && docker-php-ext-install -j$(nproc) mcrypt \
     && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -17,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_php \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install zip \
+    && docker-php-ext-install bcmath \
     && pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_mode=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
