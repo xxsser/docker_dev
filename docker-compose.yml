@@ -5,7 +5,8 @@ nginx:
     links:
       - "php"
     volumes:
-      - /workspace:/opt
+      - e:/webroot:/data
+      - e:/docker_dev/nginx/vhosts:/etc/nginx/conf.d
 php:
     build: ./php
     ports:
@@ -14,13 +15,13 @@ php:
       - "mysql"
       - "redis"
     volumes:
-      - /workspace:/opt
+      - e:/webroot:/data
 mysql:
     build: ./mysql
     ports:
       - "3306:3306"
     volumes:
-      - /workspace/data:/var/lib/mysql
+      - e:/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
 redis:
