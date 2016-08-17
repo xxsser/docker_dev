@@ -3,28 +3,28 @@ nginx:
     ports:
       - "80:80"
     links:
-      - "php"
+      - "php-fpm"
     volumes:
-      - e:/webroot:/data
-      - e:/docker_dev/nginx/vhosts:/etc/nginx/conf.d
-php:
+      - e:/WorkSpace/www:/data
+      - e:/WorkSpace/conf/nginx:/etc/nginx/conf.d
+php-fpm:
     build: ./php
     ports:
       - "9000:9000"
     links:
       - "mysql"
-      - "redis"
+      - "docker_redis"
     volumes:
-      - e:/webroot:/data
+      - e:/WorkSpace/www:/data
 mysql:
     build: ./mysql
     ports:
       - "3306:3306"
     volumes:
-      - e:/data:/var/lib/mysql
+      - e:/WorkSpace/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-redis:
+docker_redis:
     build: ./redis
     ports:
       - "6379:6379"
