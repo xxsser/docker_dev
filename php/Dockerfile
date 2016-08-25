@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y libmcrypt-dev libicu-dev libfreetype6-d
     && echo "xdebug.remote_mode=\"req\"" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_handler=\"dbgp\"" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_host= 192.168.99.1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_host=192.168.99.1" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && curl -L -o /tmp/php_redis.tar.gz https://github.com/phpredis/phpredis/archive/3.0.0.tar.gz \
     && tar xfz /tmp/php_redis.tar.gz \
     && rm -r /tmp/php_redis.tar.gz \
