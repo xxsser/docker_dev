@@ -8,7 +8,7 @@ RUN echo "deb http://mirrors.aliyun.com/debian/ jessie main non-free contrib" > 
     && echo "deb http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib"  >> /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ jessie main non-free contrib"  >> /etc/apt/sources.list \
     && echo "deb-src http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib" >> /etc/apt/sources.list
-RUN apt-get update && apt-get install -y libmcrypt-dev libicu-dev libfreetype6-dev libjpeg62-turbo-dev libpng12-dev libgmp-dev \
+RUN apt-get update && apt-get install -y libmcrypt-dev libicu-dev libfreetype6-dev libjpeg62-turbo-dev libpng12-dev libgmp-dev libmagickwand-dev libmagickcore-dev \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include \
     && docker-php-ext-configure gmp \
     && docker-php-ext-install gmp \
@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y libmcrypt-dev libicu-dev libfreetype6-d
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install mysqli pdo pdo_mysql mbstring zip bcmath \
+    && pecl install imagick \
+    && echo "extension=$(find /usr/local/lib/php/extensions/ -name imagick.so)" > /usr/local/etc/php/conf.d/imagick.ini \
     && pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
